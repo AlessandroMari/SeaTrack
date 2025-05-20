@@ -16,6 +16,7 @@ export async function logLocationData(data: LocationData): Promise<{ success: bo
   }
 
   try {
+    console.log("Attempting to add document to Firestore...");
     const docRef = await addDoc(collection(db, 'locations'), {
       objectId: data.objectId,
       latitude: data.latitude,
@@ -23,6 +24,7 @@ export async function logLocationData(data: LocationData): Promise<{ success: bo
       timestamp: serverTimestamp(),
       userAgent: data.userAgent || 'N/A',
     });
+    console.log("Document successfully added to Firestore with ID:", docRef.id);
     return { success: true, message: "Location logged successfully.", docId: docRef.id };
   } catch (error) {
     console.error("Error writing document to Firestore: ", error);
