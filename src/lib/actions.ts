@@ -31,6 +31,6 @@ export async function logLocationData(data: LocationData): Promise<{ success: bo
     // It's good practice to not expose raw error messages to the client.
     // Consider logging the detailed error server-side and returning a generic error message.
     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
- return { success: false, message: `Failed to log location.` };
+ return { success: false, message: `Failed to log location: ${errorMessage}` };
   }
 }
