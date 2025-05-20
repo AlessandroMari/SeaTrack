@@ -76,7 +76,11 @@ const LocationLogger: FC<LocationLoggerProps> = ({ objectId }) => {
           }
         } catch (error) {
           setStatus('error');
-          setMessage('Failed to submit location data. Please try again.');
+          
+          // Usa messaggio specifico se error è un Error, altrimenti generico
+          const msg = error instanceof Error ? error.message : 'Failed to submit location data. Please try again.';
+          setMessage(msg);
+        
           console.error("Error submitting location:", error);
         }
       },
