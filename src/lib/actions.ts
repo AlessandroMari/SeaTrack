@@ -26,9 +26,11 @@ export async function logLocationData(data: LocationData): Promise<{ success: bo
     return { success: true, message: "Location logged successfully.", docId: docRef.id };
   } catch (error) {
     console.error("Error writing document to Firestore: ", error);
+    console.error("Error details:", error instanceof Error ? error.stack : "No stack trace available");
+
     // It's good practice to not expose raw error messages to the client.
     // Consider logging the detailed error server-side and returning a generic error message.
     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
-    return { success: false, message: `Failed to log location: ${errorMessage}` };
+ return { success: false, message: `Failed to log location.` };
   }
 }
