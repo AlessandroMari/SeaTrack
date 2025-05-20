@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from '@/config/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getDoc, doc } from 'firebase/firestore';
 
 interface LocationData {
   objectId: string;
@@ -16,6 +16,16 @@ export async function logLocationData(data: LocationData): Promise<{ success: bo
   }
 
   try {
+    console.log("Attempting to read a test document from Firestore...");
+    // Attempt a simple read operation to test connectivity
+    const testDocRef = doc(db, 'test', 'test-doc'); // Assuming a 'test' collection and 'test-doc' document
+    const testDocSnap = await getDoc(testDocRef);
+    if (testDocSnap.exists()) {
+      console.log("Successfully read test document:", testDocSnap.data());
+    } else {
+      console.log("Test document does not exist, but connection successful.");
+    }
+
     console.log("Attempting to add document to Firestore...");
     const docRef = await addDoc(collection(db, 'locations'), {
       objectId: data.objectId,
